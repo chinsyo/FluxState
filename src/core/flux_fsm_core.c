@@ -25,6 +25,7 @@ flux_fsm_t* flux_fsm_create(int init_state, void* ctx) {
     fsm->transition_count = 0;
     fsm->handlers = NULL;
     fsm->handler_count = 0;
+    fsm->state_count = 0;
 
     return fsm;
 }
