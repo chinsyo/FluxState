@@ -32,6 +32,7 @@ void test_perf_stats(void) {
     for (int i = 0; i < 1000; i++) {
         double transition_time = (double)(rand() % 100) / 1000.0;
         flux_fsm_perf_update(&perf, transition_time);
+        perf.events++; // 更新事件计数
     }
 
     /* 验证性能统计结果 */
@@ -56,6 +57,7 @@ void test_visualization(void) {
     /* 初始化状态机 */
     memset(&fsm, 0, sizeof(flux_fsm_t));
     fsm.initial_state = STATE_IDLE;
+    fsm.state_count = STATE_STOPPED + 1; // 设置状态数量
     
     /* 添加状态转换 */
     flux_fsm_transition_t transitions[] = {
@@ -96,6 +98,7 @@ void test_validation(void) {
 
     /* 测试有效状态机 */
     fsm.initial_state = 0;
+    fsm.state_count = STATE_STOPPED + 1; // 设置状态数量
     result = flux_fsm_viz_validate(&fsm);
     printf("有效状态机测试: %s\n", result.error_code ? "失败" : "通过");
 }
