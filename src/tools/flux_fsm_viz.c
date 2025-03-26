@@ -96,7 +96,11 @@ char* flux_fsm_viz_generate(flux_fsm_t* fsm, flux_fsm_viz_config_t* cfg) {
         return NULL;
     }
 
-    fread(dot_data, 1, size, temp_file);
+    if (fread(dot_data, 1, size, temp_file) != (size_t)size) {
+        free(dot_data);
+        fclose(temp_file);
+        return NULL;
+    }
     dot_data[size] = '\0';
 
     fclose(temp_file);
